@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Easy Food License: apply for FSSAI food licence from home. Upload documents, pay after licence is ready. English, Gujarati, Hindi.">
+<meta name="theme-color" content="#1f4e79">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Easy Food License</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&family=Hind+Vadodara:wght@400;500;600&display=swap">
+<style>
+/* Layout: plain single-column service page. Header, short intro, 3 steps, application form with document uploads, charges, tracking, FAQ. */
+:root{
+  --bg:#f4f6f8; --surface:#ffffff; --ink:#1c2633; --muted:#5c6878; --line:#dce1e7;
+  --primary:#1f4e79; --on-primary:#ffffff; --primary-soft:#e8eff6;
+  --ok:#2e7d4f; --ok-soft:#e6f2ea; --warn:#8a5a00; --warn-soft:#fbf1d9; --err:#b3261e;
+  --font:"Hind","Hind Vadodara",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:8px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121820; --surface:#1a222c; --ink:#e6ebf0; --muted:#9aa6b4; --line:#2b3643;
+  --primary:#7fb0dc; --on-primary:#0e1823; --primary-soft:#1d2d3d;
+  --ok:#6cc08f; --ok-soft:#183126; --warn:#e2b45a; --warn-soft:#352a12; --err:#f08a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121820; --surface:#1a222c; --ink:#e6ebf0; --muted:#9aa6b4; --line:#2b3643;
+  --primary:#7fb0dc; --on-primary:#0e1823; --primary-soft:#1d2d3d;
+  --ok:#6cc08f; --ok-soft:#183126; --warn:#e2b45a; --warn-soft:#352a12; --err:#f08a80; color-scheme:dark}
+:lang(gu){--font:"Hind Vadodara",system-ui,sans-serif}
+:lang(hi){--font:"Hind",system-ui,sans-serif}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6}
+.wrap{max-width:920px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-weight:600;line-height:1.25;margin:0;text-wrap:balance}
+h1{font-size:clamp(1.7rem,4.5vw,2.3rem)}
+h2{font-size:clamp(1.3rem,3vw,1.6rem)}
+h3{font-size:1.05rem}
+p{margin:0}
+a{color:var(--primary)}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:var(--r);border:1.5px solid var(--primary);background:var(--primary);color:var(--on-primary);font:600 1rem var(--font);cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.line{background:transparent;color:var(--primary)}
+.btn.sm{padding:6px 12px;font-size:.9rem}
+.btn:disabled{opacity:.55;cursor:wait}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.brand{text-decoration:none;color:var(--ink);line-height:1.2}
+.brand b{font-size:1.15rem;font-weight:600;display:block}
+.brand small{color:var(--muted);font-size:.78rem}
+.lang{display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;flex-shrink:0}
+.lang button{border:0;background:transparent;color:var(--muted);padding:6px 11px;font:600 .88rem var(--font);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
+
+section{padding-block:32px}
+.intro{padding-block:36px 8px}
+.intro p{margin-top:10px;max-width:40em;color:var(--muted);font-size:1.05rem}
+.intro .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px;padding:0;list-style:none;counter-reset:s}
+.steps li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;counter-increment:s;display:flex;gap:12px;align-items:flex-start}
+.steps li::before{content:counter(s);flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--primary-soft);color:var(--primary);font-weight:600;display:grid;place-items:center}
+.steps b{display:block;font-weight:600}
+.steps span{color:var(--muted);font-size:.92rem}
+@media (max-width:680px){.steps{grid-template-columns:1fr}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.sh{margin-bottom:16px}
+.sh p{color:var(--muted);margin-top:4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.grid2{grid-template-columns:1fr}}
+@media (max-width:720px){.doc{grid-template-columns:1fr}.doc .btns{justify-content:flex-start}}
+.form{display:grid;gap:14px}
+label{display:block;font-weight:500;font-size:.95rem;margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--ink);font:1rem var(--font)}
+textarea{min-height:70px;resize:vertical}
+.req{color:var(--err)}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend{font-weight:600;font-size:1.05rem;margin-bottom:4px;padding:0}
+hr{border:0;border-top:1px solid var(--line);margin:8px 0}
+
+.docs{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.doc{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;background:var(--bg)}
+.doc.has{border-color:var(--ok);background:var(--ok-soft)}
+.doc .name{font-weight:500;min-width:0}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:0 7px;border-radius:4px;margin-left:6px;vertical-align:1px}
+.tag.r{background:var(--warn-soft);color:var(--warn)}
+.tag.o{background:var(--primary-soft);color:var(--muted)}
+.doc .btns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.doc .up{position:relative}
+.doc .up input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.chips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px}
+.chips:empty{display:none}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px 4px 2px 10px;font-size:.85rem;max-width:100%}
+.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip button{border:0;background:transparent;color:var(--err);font-size:1.1rem;line-height:1;cursor:pointer;padding:2px 6px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+.check input{width:20px;height:20px;flex-shrink:0;margin-top:2px;accent-color:var(--primary)}
+.msg{border-radius:var(--r);padding:12px 14px;font-size:.95rem}
+.msg.ok{background:var(--ok-soft)}
+.msg.warn{background:var(--warn-soft)}
+.msg.err{color:var(--err);padding:0}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600}
+
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.price{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.price b{display:block;font-size:1.4rem;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
+.price small{color:var(--muted)}
+@media (max-width:620px){.prices{grid-template-columns:1fr}}
+.tbl{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.93rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.timeline{margin-top:14px;display:grid;gap:0}
+.tl{display:flex;gap:10px;align-items:flex-start;padding-bottom:10px}
+.tl i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;margin-top:5px;background:var(--surface)}
+.tl.done i{background:var(--ok);border-color:var(--ok)}
+.tl.now i{background:var(--primary);border-color:var(--primary)}
+.tl.todo span{color:var(--muted)}
+
+details{border-bottom:1px solid var(--line);padding-block:12px}
+summary{font-weight:500;cursor:pointer}
+details p{color:var(--muted);margin-top:6px}
+.contact{display:grid;gap:6px}
+.contact .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+footer{border-top:1px solid var(--line);padding-block:22px;color:var(--muted);font-size:.86rem;background:var(--surface)}
+footer p{max-width:62em;margin-top:6px}
+
+/* admin */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.filters button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 12px;font:500 .88rem var(--font);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.app{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.app[data-s="0"]{border-left-color:var(--primary)}
+.app[data-s="1"]{border-left-color:var(--err)}
+.app[data-s="4"]{border-left-color:var(--warn)}
+.app[data-s="5"]{border-left-color:var(--ok)}
+.app .top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.pill{font-size:.78rem;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--primary-soft);color:var(--primary)}
+.app .meta{color:var(--muted);font-size:.9rem}
+.app .files{font-size:.85rem;color:var(--muted);overflow-wrap:anywhere}
+.app .g3{display:grid;grid-template-columns:1.4fr .7fr 1fr auto;gap:8px;align-items:end}
+.app .acts{display:flex;flex-wrap:wrap;gap:6px}
+@media (max-width:640px){.app .g3{grid-template-columns:1fr 1fr}}
+.list{display:grid;gap:12px}
+.demo{background:var(--warn-soft);border-radius:var(--r);padding:10px 14px;font-size:.9rem;margin-bottom:12px}
+</style>
+
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top"><b>Easy Food License</b><small data-i="sub">FSSAI food licence help</small></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="gu" aria-pressed="false">ગુ</button>
+      <button type="button" data-lang="hi" aria-pressed="false">हि</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<div id="publicView">
+  <div class="wrap intro">
+    <h1 data-i="h1">Get your FSSAI food licence from home</h1>
+    <p data-i="lead">Upload your documents here. We apply on the government FoSCoS portal and follow up. When your licence is ready, you pay us and we send it to you on WhatsApp.</p>
+    <div class="row">
+      <a class="btn" href="#apply" data-i="ctaApply">Apply now</a>
+      <a class="btn line" href="#track" data-i="ctaTrack">Track application</a>
+    </div>
+    <ol class="steps">
+      <li><div><b data-i="s1">Upload documents</b><span data-i="s1d">Fill the form and upload clear photos or PDFs.</span></div></li>
+      <li><div><b data-i="s2">We apply</b><span data-i="s2d">We check your documents and apply on FoSCoS.</span></div></li>
+      <li><div><b data-i="s3">Pay and receive</b><span data-i="s3d">Pay only when the licence is ready. We WhatsApp it to you.</span></div></li>
+    </ol>
+  </div>
+
+  <section id="apply">
+    <div class="wrap">
+      <div class="card">
+        <div class="sh"><h2 data-i="aTitle">Apply for food licence</h2><p data-i="aSub">Fields marked * are required.</p></div>
+        <form class="form" id="appForm" novalidate>
+          <fieldset class="form">
+            <legend data-i="lgDetails">1. Your details</legend>
+            <div class="grid2">
+              <div><label for="fName"><span data-i="fName">Owner name</span> <span class="req">*</span></label><input id="fName" autocomplete="name" maxlength="80"></div>
+              <div><label for="fMobile"><span data-i="fMobile">Mobile number (WhatsApp)</span> <span class="req">*</span></label><input id="fMobile" inputmode="numeric" maxlength="10" autocomplete="tel"></div>
+            </div>
+            <div class="grid2">
+              <div><label for="fShop"><span data-i="fShop">Shop / business name</span> <span class="req">*</span></label><input id="fShop" maxlength="80"></div>
+              <div><label for="fCity" data-i="fCity">City / village</label><input id="fCity" maxlength="60"></div>
+            </div>
+            <div class="grid2">
+              <div><label for="fType" data-i="fType">Type of food business</label><select id="fType"></select></div>
+              <div><label for="fLic" data-i="fLic">Licence needed</label><select id="fLic"></select></div>
+            </div>
+          </fieldset>
+          <hr>
+          <fieldset>
+            <legend data-i="lgDocs">2. Upload documents</legend>
+            <p class="muted" data-i="docHelp">Use "Take photo" to click a photo with your phone camera, or "Upload" to choose a photo or PDF (up to 5 MB). Photos are reduced in size automatically.</p>
+            <ul class="docs" id="docList"></ul>
+          </fieldset>
+          <hr>
+          <div><label for="fMsg" data-i="fMsg">Message (optional)</label><textarea id="fMsg" maxlength="500"></textarea></div>
+          <label class="check"><input type="checkbox" id="fAgree"><span data-i="agree">I confirm these documents are mine and allow Easy Food License to use them only for my FSSAI application.</span></label>
+          <p class="msg err" id="appErr" hidden></p>
+          <div><button class="btn" type="submit" id="appBtn" data-i="submit">Submit application</button></div>
+          <div class="msg ok" id="appOk" hidden></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="charges">
+    <div class="wrap">
+      <div class="sh"><h2 data-i="cTitle">Our charges</h2><p data-i="cSub">You pay only after your licence is ready. We confirm the amount with you before applying.</p></div>
+      <div class="prices" id="priceList"></div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th data-i="thCat">Licence type</th><th data-i="thTurn">Yearly turnover (from 01/04/2026)</th><th data-i="thGov">Government fee / year</th></tr></thead>
+          <tbody>
+            <tr><td data-i="lBasic">Basic Registration</td><td class="n" data-i="slab1">Up to ₹1.5 crore</td><td class="n">₹100</td></tr>
+            <tr><td data-i="lState">State Licence</td><td class="n" data-i="slab2">₹1.5 crore – ₹50 crore</td><td class="n">₹2,000 – ₹5,000</td></tr>
+            <tr><td data-i="lCentral">Central Licence</td><td class="n" data-i="slab3">Above ₹50 crore, importers, exporters, online sellers</td><td class="n">₹7,500</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="track">
+    <div class="wrap">
+      <div class="card">
+        <div class="sh"><h2 data-i="tTitle">Track application</h2><p data-i="tSub">Enter the reference number you received after submitting.</p></div>
+        <form class="form" id="trForm" novalidate>
+          <div class="grid2">
+            <div><label for="tRef" data-i="tRef">Reference number</label><input id="tRef" placeholder="EFL-26-0001" class="mono" style="font-weight:500"></div>
+            <div><label for="tMob" data-i="fMobile">Mobile number (WhatsApp)</label><input id="tMob" inputmode="numeric" maxlength="10"></div>
+          </div>
+          <div><button class="btn sm" type="submit" id="trBtn" data-i="tBtn">Check status</button></div>
+          <p class="msg err" id="trErr" hidden></p>
+        </form>
+        <div id="trOut" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sh"><h2 data-i="qTitle">Questions</h2></div>
+      <div id="faqList"></div>
+      <div class="card contact" style="margin-top:20px">
+        <h3 data-i="ctTitle">Contact</h3>
+        <div class="row"><span data-i="ctPhone">Phone / WhatsApp:</span> <b id="cPhone"></b> <button class="btn line sm" type="button" id="copyPhone" data-i="copy">Copy</button></div>
+        <div class="row"><span data-i="ctEmail">Email:</span> <b id="cEmail"></b></div>
+        <div class="row"><span data-i="ctAddr">Office:</span> <span id="cAddr"></span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="adminView" hidden>
+  <section><div class="wrap">
+    <div class="sh"><h2>Admin – applications</h2><p>Set the status as you process each application. Customers see it under “Track application”.</p></div>
+    <div class="demo" id="aDemo" hidden>Preview mode: the Google backend is not connected yet, so this shows only applications sent from this browser, and files are not stored.</div>
+    <form class="card form" id="pinForm" style="max-width:380px">
+      <div><label for="aPin">Admin PIN</label><input id="aPin" type="password" autocomplete="current-password"></div>
+      <button class="btn sm" type="submit" style="justify-self:start">Open</button>
+      <p class="msg err" id="pinErr" hidden></p>
+    </form>
+    <div id="aTools" hidden>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="aSearch" placeholder="Search name, mobile, shop, ref" style="max-width:320px">
+        <button class="btn line sm" type="button" id="aRefresh">Refresh</button>
+        <button class="btn line sm" type="button" id="aLogout">Lock</button>
+        <a class="btn line sm" href="#top">Back to site</a>
+      </div>
+      <div class="filters" id="aFilters"></div>
+      <div class="list" id="aList"></div>
+    </div>
+  </div></section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Easy Food License</b> · <a href="#admin" style="color:var(--muted)">Admin</a></div>
+    <p data-i="disc">Easy Food License is a private consultancy. It is not part of, or approved by, FSSAI or any government office. Licences are issued only by the food safety authorities. You can also apply yourself at foscos.fssai.gov.in.</p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   SETTINGS — change these to your own details
+   ========================================================= */
+const CONFIG = {
+  phone: "8780795519",                 // 10-digit mobile, also used for WhatsApp
+  email: "nimbarkekta@gmail.com",
+  address: { en:"Junagadh, Gujarat", gu:"જૂનાગઢ, ગુજરાત", hi:"जूनागढ़, गुजरात" },
+  upiId: "yourname@upi",               // shown to customers when the licence is ready
+  charges: { basic: 700, state: 900, central: "" },   // "" = "As decided"
+  backendUrl: "https://script.google.com/macros/s/AKfycbydewaLGH_7TMb0db90ZvVrNyMWbifw8bEHbdxmoL5-RSiigSq7aoG8rliSDAlHM32_hA/exec"                       // paste your Google Apps Script web app URL here
+};
+</script>
+
+<script>
+/* ---------- documents (file name part is the same in every language) ---------- */
+const DOCS = {
+  photo:      {file:"Photo",              en:"Owner's passport-size photo", gu:"માલિકનો પાસપોર્ટ સાઇઝ ફોટો", hi:"मालिक की पासपोर्ट साइज़ फोटो"},
+  aadhaar:    {file:"Aadhaar Card",       en:"Aadhaar card (both sides)", gu:"આધાર કાર્ડ (બંને બાજુ)", hi:"आधार कार्ड (दोनों तरफ़)"},
+  pan:        {file:"PAN Card",           en:"PAN card", gu:"પાન કાર્ડ", hi:"पैन कार्ड"},
+  address:    {file:"Shop Address Proof", en:"Shop address proof (light bill, rent agreement or tax bill)", gu:"દુકાનના સરનામાનો પુરાવો (લાઇટ બિલ, ભાડા કરાર કે વેરા બિલ)", hi:"दुकान के पते का प्रमाण (बिजली बिल, किराया अनुबंध या टैक्स बिल)"},
+  shopphoto:  {file:"Shop Photo",         en:"Photo of the shop with name board", gu:"નામના બોર્ડ સાથે દુકાનનો ફોટો", hi:"नाम के बोर्ड के साथ दुकान की फोटो"},
+  foodlist:   {file:"Food Items List",    en:"List of food items (photo of a handwritten list is fine)", gu:"ખોરાકની વસ્તુઓની યાદી (હાથે લખેલી યાદીનો ફોટો ચાલશે)", hi:"खाद्य वस्तुओं की सूची (हाथ से लिखी सूची की फोटो चलेगी)"},
+  premises:   {file:"Premises Proof",     en:"Rent agreement or ownership proof of premises", gu:"જગ્યાનો ભાડા કરાર કે માલિકીનો પુરાવો", hi:"परिसर का किराया अनुबंध या स्वामित्व प्रमाण"},
+  layout:     {file:"Layout Plan",        en:"Layout plan of the processing area", gu:"પ્રોસેસિંગ વિસ્તારનો લેઆઉટ પ્લાન", hi:"प्रोसेसिंग क्षेत्र का लेआउट प्लान"},
+  machinery:  {file:"Machinery List",     en:"List of machinery and equipment", gu:"મશીનરી અને સાધનોની યાદી", hi:"मशीनरी और उपकरणों की सूची"},
+  water:      {file:"Water Test Report",  en:"Water test report (NABL lab)", gu:"પાણી ટેસ્ટ રિપોર્ટ (NABL લેબ)", hi:"पानी जाँच रिपोर्ट (NABL लैब)"},
+  partnership:{file:"Partnership Deed",   en:"Partnership deed / company papers", gu:"ભાગીદારી ખત / કંપનીના કાગળો", hi:"साझेदारी विलेख / कंपनी के कागज़"},
+  noc:        {file:"NOC",                en:"NOC from municipality or panchayat", gu:"નગરપાલિકા કે પંચાયતનું NOC", hi:"नगरपालिका या पंचायत की NOC"},
+  iec:        {file:"IEC Certificate",    en:"Import Export Code (IEC) certificate", gu:"આયાત-નિકાસ કોડ (IEC) પ્રમાણપત્ર", hi:"आयात-निर्यात कोड (IEC) प्रमाणपत्र"},
+  other:      {file:"Other Document",     en:"Any other document", gu:"બીજો કોઈ દસ્તાવેજ", hi:"कोई अन्य दस्तावेज़"}
+};
+// [code, required]
+const SETS = {
+  basic:   [["photo",1],["aadhaar",1],["pan",1],["address",1],["shopphoto",0],["foodlist",0],["other",0]],
+  state:   [["photo",1],["aadhaar",1],["pan",1],["address",1],["premises",1],["layout",1],["machinery",1],["water",0],["partnership",0],["noc",0],["foodlist",0],["other",0]],
+  central: [["photo",1],["aadhaar",1],["pan",1],["address",1],["premises",1],["layout",1],["machinery",1],["iec",0],["water",0],["partnership",0],["noc",0],["foodlist",0],["other",0]]
+};
+const LIC_KEYS = ["basic","state","central","notsure"];
+const LIC_EN = ["Basic Registration","State Licence","Central Licence","Not sure"];
+
+const T = {
+en:{sub:"FSSAI food licence help",h1:"Get your FSSAI food licence from home",
+lead:"Upload your documents here. We apply on the government FoSCoS portal and follow up. When your licence is ready, you pay us and we send it to you on WhatsApp.",
+ctaApply:"Apply now",ctaTrack:"Track application",s1:"Upload documents",s1d:"Fill the form and upload clear photos or PDFs.",s2:"We apply",s2d:"We check your documents and apply on FoSCoS.",s3:"Pay and receive",s3d:"Pay only when the licence is ready. We WhatsApp it to you.",
+aTitle:"Apply for food licence",aSub:"Fields marked * are required.",lgDetails:"1. Your details",fName:"Owner name",fMobile:"Mobile number (WhatsApp)",fShop:"Shop / business name",fCity:"City / village",fType:"Type of food business",fLic:"Licence needed",
+lgDocs:"2. Upload documents",docHelp:"Use \"Take photo\" to click a photo with your phone camera, or \"Upload\" to choose a photo or PDF (up to 5 MB). Photos are reduced in size automatically.",required:"Required",optional:"Optional",upload:"Upload",change:"Add more",camera:"Take photo",
+fMsg:"Message (optional)",agree:"I confirm these documents are mine and allow Easy Food License to use them only for my FSSAI application.",submit:"Submit application",sending:"Uploading… please keep this page open",
+eName:"Please write the owner name.",eMob:"Please enter a valid 10-digit mobile number.",eShop:"Please write the shop or business name.",eDocs:"Please upload: {list}",eAgree:"Please tick the confirmation box.",eBig:"{name} is larger than 5 MB.",eType:"{name}: only JPG, PNG or PDF files are allowed.",eNet:"Could not send. Please check your internet and try again. ({msg})",
+okSent:"Application submitted. Your reference number is <span class=\"mono\">{ref}</span>. Please note it down. We will WhatsApp you on {mob} when your licence is ready.",
+okDemo:"Preview only: your reference number is <span class=\"mono\">{ref}</span>. Files are saved for real once the Google backend is connected.",
+cTitle:"Our charges",cSub:"You pay only after your licence is ready. We confirm the amount with you before applying.",asDecided:"As decided",perApp:"service charge",
+thCat:"Licence type",thTurn:"Yearly turnover (from 01/04/2026)",thGov:"Government fee / year",lBasic:"Basic Registration",lState:"State Licence",lCentral:"Central Licence",
+slab1:"Up to ₹1.5 crore",slab2:"₹1.5 crore – ₹50 crore",slab3:"Above ₹50 crore, importers, exporters, online sellers",
+tTitle:"Track application",tSub:"Enter the reference number you received after submitting.",tRef:"Reference number",tBtn:"Check status",tNone:"No application found with this reference number and mobile number.",
+tl:["Application received","Documents checked","Applied on FoSCoS","Licence ready","Licence sent on WhatsApp"],
+needMore:"We need some more documents for your application. Please upload them below, or send them on WhatsApp.",
+readyPay:"Your licence is ready. Please pay <b>₹{fee}</b> to UPI ID <span class=\"mono\">{upi}</span> and send the payment screenshot on WhatsApp to {phone}. We will then send your licence.",
+sentDone:"Your licence has been sent to you on WhatsApp.",licNo:"FSSAI licence number",
+addTitle:"Upload more documents",addDoc:"Document",addFile:"File",addBtn:"Upload",addOk:"Uploaded {n} file(s). Thank you.",
+qTitle:"Questions",ctTitle:"Contact",ctPhone:"Phone / WhatsApp:",ctEmail:"Email:",ctAddr:"Office:",copy:"Copy",copied:"Copied",
+faq:[["Is a food licence compulsory?","Yes. Every food business, even a small cart or home kitchen that sells food, needs at least a Basic Registration under the Food Safety and Standards Act."],
+["When do I pay?","Only after your licence is issued. We send you a WhatsApp message with the amount and UPI ID. After payment, we send the licence."],
+["Are my documents safe?","Your documents are stored in our private Google Drive folder and used only for your FSSAI application."],
+["How long does it take?","Basic Registration usually takes about 7 days, State Licence about 30 days and Central Licence 30 to 60 days, depending on inspection and queries."],
+["Do I need to renew every year?","Licences issued now do not expire, but the yearly government fee must be paid on time. We can remind you."]],
+disc:"Easy Food License is a private consultancy. It is not part of, or approved by, FSSAI or any government office. Licences are issued only by the food safety authorities. You can also apply yourself at foscos.fssai.gov.in.",
+types:["Shop / kirana / retail","Restaurant / hotel / dhaba","Sweet & farsan shop","Street food cart / stall","Home kitchen / tiffin / cloud kitchen","Caterer","Manufacturer / processor","Dairy unit","Wholesaler / distributor","Transporter / storage","Importer / exporter","Online food seller"],
+lic:["Basic Registration","State Licence","Central Licence","Not sure – please advise"],
+wa:{more:"Namaste {name}, for your FSSAI application ({ref}) we need some more documents. Please upload them on the Easy Food License website or app under \"Track application\", or send them here.",
+ready:"Namaste {name}, your FSSAI food licence for {shop} is ready (Ref {ref}). Please pay Rs. {fee} to UPI ID {upi} and send the payment screenshot here. We will then send your licence. – Easy Food License",
+sent:"Thank you for the payment, {name}. Here is your FSSAI food licence for {shop} (Ref {ref}). Please print it and display it in your shop. – Easy Food License"}},
+
+gu:{sub:"FSSAI ફૂડ લાઇસન્સ મદદ",h1:"ઘરે બેઠા FSSAI ફૂડ લાઇસન્સ મેળવો",
+lead:"અહીં તમારા દસ્તાવેજ અપલોડ કરો. અમે સરકારી FoSCoS પોર્ટલ પર અરજી કરીને ફોલો-અપ કરીએ છીએ. લાઇસન્સ તૈયાર થાય એટલે તમે ચુકવણી કરો અને અમે WhatsApp પર લાઇસન્સ મોકલીએ.",
+ctaApply:"અરજી કરો",ctaTrack:"અરજીની સ્થિતિ",s1:"દસ્તાવેજ અપલોડ કરો",s1d:"ફોર્મ ભરો અને ચોખ્ખા ફોટા કે PDF અપલોડ કરો.",s2:"અમે અરજી કરીએ",s2d:"દસ્તાવેજ તપાસીને FoSCoS પર અરજી કરીએ છીએ.",s3:"ચુકવણી અને લાઇસન્સ",s3d:"લાઇસન્સ તૈયાર થાય પછી જ ચુકવણી. WhatsApp પર મોકલીએ.",
+aTitle:"ફૂડ લાઇસન્સ માટે અરજી",aSub:"* વાળી વિગત ફરજિયાત છે.",lgDetails:"1. તમારી વિગત",fName:"માલિકનું નામ",fMobile:"મોબાઇલ નંબર (WhatsApp)",fShop:"દુકાન / ધંધાનું નામ",fCity:"શહેર / ગામ",fType:"ફૂડ ધંધાનો પ્રકાર",fLic:"કયું લાઇસન્સ",
+lgDocs:"2. દસ્તાવેજ અપલોડ કરો",docHelp:"\"ફોટો પાડો\" દબાવીને ફોનના કેમેરાથી ફોટો લો, અથવા \"અપલોડ\" દબાવીને ફોટો કે PDF પસંદ કરો (5 MB સુધી). ફોટાની સાઇઝ આપોઆપ નાની થશે.",required:"ફરજિયાત",optional:"વૈકલ્પિક",upload:"અપલોડ",change:"વધુ ઉમેરો",camera:"ફોટો પાડો",
+fMsg:"સંદેશ (વૈકલ્પિક)",agree:"હું ખાતરી આપું છું કે આ દસ્તાવેજ મારા છે અને Easy Food License ફક્ત મારી FSSAI અરજી માટે તેનો ઉપયોગ કરી શકે છે.",submit:"અરજી મોકલો",sending:"અપલોડ થઈ રહ્યું છે… આ પેજ ખુલ્લું રાખો",
+eName:"કૃપા કરીને માલિકનું નામ લખો.",eMob:"કૃપા કરીને સાચો 10 આંકડાનો મોબાઇલ નંબર લખો.",eShop:"કૃપા કરીને દુકાન કે ધંધાનું નામ લખો.",eDocs:"કૃપા કરીને અપલોડ કરો: {list}",eAgree:"કૃપા કરીને ખાતરીના બોક્સમાં ટિક કરો.",eBig:"{name} 5 MB કરતાં મોટી છે.",eType:"{name}: ફક્ત JPG, PNG કે PDF ફાઇલ ચાલશે.",eNet:"મોકલી શકાયું નથી. ઇન્ટરનેટ તપાસીને ફરી પ્રયાસ કરો. ({msg})",
+okSent:"અરજી મળી ગઈ. તમારો રેફરન્સ નંબર <span class=\"mono\">{ref}</span> છે. તેને નોંધી રાખો. લાઇસન્સ તૈયાર થશે ત્યારે {mob} પર WhatsApp કરીશું.",
+okDemo:"ફક્ત પ્રિવ્યૂ: તમારો રેફરન્સ નંબર <span class=\"mono\">{ref}</span> છે. Google બેકએન્ડ જોડાયા પછી ફાઇલો ખરેખર સેવ થશે.",
+cTitle:"અમારો ચાર્જ",cSub:"લાઇસન્સ તૈયાર થાય પછી જ ચુકવણી. અરજી કરતાં પહેલાં રકમ નક્કી કરીએ છીએ.",asDecided:"નક્કી કર્યા મુજબ",perApp:"સર્વિસ ચાર્જ",
+thCat:"લાઇસન્સનો પ્રકાર",thTurn:"વાર્ષિક ટર્નઓવર (01/04/2026 થી)",thGov:"સરકારી ફી / વર્ષ",lBasic:"બેઝિક રજિસ્ટ્રેશન",lState:"સ્ટેટ લાઇસન્સ",lCentral:"સેન્ટ્રલ લાઇસન્સ",
+slab1:"₹1.5 કરોડ સુધી",slab2:"₹1.5 કરોડ – ₹50 કરોડ",slab3:"₹50 કરોડથી વધુ, આયાતકાર, નિકાસકાર, ઓનલાઇન વેચાણ",
+tTitle:"અરજીની સ્થિતિ",tSub:"અરજી મોકલ્યા પછી મળેલો રેફરન્સ નંબર લખો.",tRef:"રેફરન્સ નંબર",tBtn:"સ્થિતિ જુઓ",tNone:"આ રેફરન્સ અને મોબાઇલ નંબરથી કોઈ અરજી મળી નથી.",
+tl:["અરજી મળી","દસ્તાવેજ તપાસ્યા","FoSCoS પર અરજી કરી","લાઇસન્સ તૈયાર","WhatsApp પર લાઇસન્સ મોકલ્યું"],
+needMore:"તમારી અરજી માટે થોડા વધુ દસ્તાવેજ જોઈએ છે. નીચે અપલોડ કરો અથવા WhatsApp પર મોકલો.",
+readyPay:"તમારું લાઇસન્સ તૈયાર છે. UPI ID <span class=\"mono\">{upi}</span> પર <b>₹{fee}</b> ચૂકવો અને પેમેન્ટનો સ્ક્રીનશોટ {phone} પર WhatsApp કરો. પછી અમે લાઇસન્સ મોકલીશું.",
+sentDone:"તમારું લાઇસન્સ WhatsApp પર મોકલી દીધું છે.",licNo:"FSSAI લાઇસન્સ નંબર",
+addTitle:"વધુ દસ્તાવેજ અપલોડ કરો",addDoc:"દસ્તાવેજ",addFile:"ફાઇલ",addBtn:"અપલોડ",addOk:"{n} ફાઇલ અપલોડ થઈ. આભાર.",
+qTitle:"પ્રશ્નો",ctTitle:"સંપર્ક",ctPhone:"ફોન / WhatsApp:",ctEmail:"ઈમેલ:",ctAddr:"ઓફિસ:",copy:"કોપી",copied:"કોપી થયું",
+faq:[["શું ફૂડ લાઇસન્સ ફરજિયાત છે?","હા. ખોરાક વેચતા દરેક ધંધા, નાની લારી કે ઘરના રસોડાને પણ, ઓછામાં ઓછું બેઝિક રજિસ્ટ્રેશન જોઈએ."],
+["ચુકવણી ક્યારે કરવાની?","લાઇસન્સ મળી જાય પછી જ. અમે રકમ અને UPI ID સાથે WhatsApp મેસેજ મોકલીશું. ચુકવણી પછી લાઇસન્સ મોકલીશું."],
+["મારા દસ્તાવેજ સુરક્ષિત છે?","તમારા દસ્તાવેજ અમારા ખાનગી Google Drive ફોલ્ડરમાં રહે છે અને ફક્ત તમારી FSSAI અરજી માટે વપરાય છે."],
+["કેટલો સમય લાગે?","બેઝિક રજિસ્ટ્રેશનમાં લગભગ 7 દિવસ, સ્ટેટ લાઇસન્સમાં લગભગ 30 દિવસ અને સેન્ટ્રલ લાઇસન્સમાં 30 થી 60 દિવસ."],
+["દર વર્ષે રિન્યુ કરવું પડે?","હવેના લાઇસન્સની મુદત પૂરી થતી નથી, પણ વાર્ષિક સરકારી ફી સમયસર ભરવી પડે. અમે યાદ કરાવી શકીએ."]],
+disc:"Easy Food License એક ખાનગી સલાહકાર સેવા છે. તે FSSAI કે કોઈ સરકારી કચેરીનો ભાગ નથી કે તેના દ્વારા માન્ય નથી. લાઇસન્સ ફક્ત ખોરાક સુરક્ષા સત્તામંડળ આપે છે. તમે foscos.fssai.gov.in પર જાતે પણ અરજી કરી શકો છો.",
+types:["દુકાન / કરિયાણું / રિટેલ","રેસ્ટોરન્ટ / હોટલ / ઢાબા","મીઠાઈ અને ફરસાણની દુકાન","લારી / સ્ટોલ","ઘરનું રસોડું / ટિફિન / ક્લાઉડ કિચન","કેટરર","ઉત્પાદક / પ્રોસેસર","ડેરી યુનિટ","હોલસેલર / ડિસ્ટ્રિબ્યુટર","ટ્રાન્સપોર્ટર / સ્ટોરેજ","આયાતકાર / નિકાસકાર","ઓનલાઇન ફૂડ વેચાણ"],
+lic:["બેઝિક રજિસ્ટ્રેશન","સ્ટેટ લાઇસન્સ","સેન્ટ્રલ લાઇસન્સ","ખબર નથી – સલાહ આપો"],
+wa:{more:"નમસ્તે {name}, તમારી FSSAI અરજી ({ref}) માટે થોડા વધુ દસ્તાવેજ જોઈએ છે. Easy Food License વેબસાઇટ કે એપમાં \"અરજીની સ્થિતિ\"માં અપલોડ કરો, અથવા અહીં મોકલો.",
+ready:"નમસ્તે {name}, {shop} માટેનું તમારું FSSAI ફૂડ લાઇસન્સ તૈયાર છે (Ref {ref}). UPI ID {upi} પર રૂ. {fee} ચૂકવીને પેમેન્ટનો સ્ક્રીનશોટ અહીં મોકલો. પછી અમે લાઇસન્સ મોકલીશું. – Easy Food License",
+sent:"ચુકવણી માટે આભાર, {name}. {shop} માટેનું તમારું FSSAI ફૂડ લાઇસન્સ આ સાથે છે (Ref {ref}). તેની પ્રિન્ટ કાઢીને દુકાનમાં લગાવો. – Easy Food License"}},
+
+hi:{sub:"FSSAI फूड लाइसेंस मदद",h1:"घर बैठे FSSAI फूड लाइसेंस पाएँ",
+lead:"यहाँ अपने दस्तावेज़ अपलोड करें। हम सरकारी FoSCoS पोर्टल पर आवेदन करके फॉलो-अप करते हैं। लाइसेंस तैयार होने पर आप भुगतान करें और हम WhatsApp पर लाइसेंस भेजते हैं।",
+ctaApply:"आवेदन करें",ctaTrack:"आवेदन की स्थिति",s1:"दस्तावेज़ अपलोड करें",s1d:"फॉर्म भरें और साफ़ फोटो या PDF अपलोड करें।",s2:"हम आवेदन करते हैं",s2d:"दस्तावेज़ जाँचकर FoSCoS पर आवेदन करते हैं।",s3:"भुगतान और लाइसेंस",s3d:"लाइसेंस तैयार होने पर ही भुगतान। WhatsApp पर भेजते हैं।",
+aTitle:"फूड लाइसेंस के लिए आवेदन",aSub:"* वाली जानकारी ज़रूरी है।",lgDetails:"1. आपकी जानकारी",fName:"मालिक का नाम",fMobile:"मोबाइल नंबर (WhatsApp)",fShop:"दुकान / व्यवसाय का नाम",fCity:"शहर / गाँव",fType:"खाद्य व्यवसाय का प्रकार",fLic:"कौन सा लाइसेंस",
+lgDocs:"2. दस्तावेज़ अपलोड करें",docHelp:"\"फोटो खींचें\" दबाकर फ़ोन के कैमरे से फोटो लें, या \"अपलोड\" दबाकर फोटो या PDF चुनें (5 MB तक)। फोटो का साइज़ अपने आप छोटा होगा।",required:"ज़रूरी",optional:"वैकल्पिक",upload:"अपलोड",change:"और जोड़ें",camera:"फोटो खींचें",
+fMsg:"संदेश (वैकल्पिक)",agree:"मैं पुष्टि करता/करती हूँ कि ये दस्तावेज़ मेरे हैं और Easy Food License इनका उपयोग केवल मेरे FSSAI आवेदन के लिए कर सकता है।",submit:"आवेदन भेजें",sending:"अपलोड हो रहा है… यह पेज खुला रखें",
+eName:"कृपया मालिक का नाम लिखें।",eMob:"कृपया सही 10 अंकों का मोबाइल नंबर लिखें।",eShop:"कृपया दुकान या व्यवसाय का नाम लिखें।",eDocs:"कृपया अपलोड करें: {list}",eAgree:"कृपया पुष्टि वाले बॉक्स पर टिक करें।",eBig:"{name} 5 MB से बड़ी है।",eType:"{name}: केवल JPG, PNG या PDF फ़ाइल चलेगी।",eNet:"भेजा नहीं जा सका। इंटरनेट जाँचकर फिर कोशिश करें। ({msg})",
+okSent:"आवेदन मिल गया। आपका रेफरेंस नंबर <span class=\"mono\">{ref}</span> है। इसे नोट कर लें। लाइसेंस तैयार होने पर {mob} पर WhatsApp करेंगे।",
+okDemo:"केवल प्रीव्यू: आपका रेफरेंस नंबर <span class=\"mono\">{ref}</span> है। Google बैकएंड जुड़ने के बाद फ़ाइलें सच में सेव होंगी।",
+cTitle:"हमारा चार्ज",cSub:"लाइसेंस तैयार होने के बाद ही भुगतान। आवेदन से पहले राशि तय करते हैं।",asDecided:"तय अनुसार",perApp:"सर्विस चार्ज",
+thCat:"लाइसेंस का प्रकार",thTurn:"वार्षिक टर्नओवर (01/04/2026 से)",thGov:"सरकारी फीस / वर्ष",lBasic:"बेसिक रजिस्ट्रेशन",lState:"स्टेट लाइसेंस",lCentral:"सेंट्रल लाइसेंस",
+slab1:"₹1.5 करोड़ तक",slab2:"₹1.5 करोड़ – ₹50 करोड़",slab3:"₹50 करोड़ से अधिक, आयातक, निर्यातक, ऑनलाइन विक्रेता",
+tTitle:"आवेदन की स्थिति",tSub:"आवेदन भेजने के बाद मिला रेफरेंस नंबर लिखें।",tRef:"रेफरेंस नंबर",tBtn:"स्थिति देखें",tNone:"इस रेफरेंस और मोबाइल नंबर से कोई आवेदन नहीं मिला।",
+tl:["आवेदन मिला","दस्तावेज़ जाँचे","FoSCoS पर आवेदन किया","लाइसेंस तैयार","WhatsApp पर लाइसेंस भेजा"],
+needMore:"आपके आवेदन के लिए कुछ और दस्तावेज़ चाहिए। नीचे अपलोड करें या WhatsApp पर भेजें।",
+readyPay:"आपका लाइसेंस तैयार है। UPI ID <span class=\"mono\">{upi}</span> पर <b>₹{fee}</b> भुगतान करें और स्क्रीनशॉट {phone} पर WhatsApp करें। फिर हम लाइसेंस भेजेंगे।",
+sentDone:"आपका लाइसेंस WhatsApp पर भेज दिया गया है।",licNo:"FSSAI लाइसेंस नंबर",
+addTitle:"और दस्तावेज़ अपलोड करें",addDoc:"दस्तावेज़",addFile:"फ़ाइल",addBtn:"अपलोड",addOk:"{n} फ़ाइल अपलोड हुई। धन्यवाद।",
+qTitle:"सवाल",ctTitle:"संपर्क",ctPhone:"फ़ोन / WhatsApp:",ctEmail:"ईमेल:",ctAddr:"कार्यालय:",copy:"कॉपी",copied:"कॉपी हुआ",
+faq:[["क्या फूड लाइसेंस ज़रूरी है?","हाँ। खाना बेचने वाले हर व्यवसाय, छोटे ठेले या घर की रसोई को भी, कम से कम बेसिक रजिस्ट्रेशन चाहिए।"],
+["भुगतान कब करना है?","लाइसेंस मिलने के बाद ही। हम राशि और UPI ID के साथ WhatsApp संदेश भेजेंगे। भुगतान के बाद लाइसेंस भेजेंगे।"],
+["क्या मेरे दस्तावेज़ सुरक्षित हैं?","आपके दस्तावेज़ हमारे निजी Google Drive फ़ोल्डर में रहते हैं और केवल आपके FSSAI आवेदन के लिए उपयोग होते हैं।"],
+["कितना समय लगता है?","बेसिक रजिस्ट्रेशन में लगभग 7 दिन, स्टेट लाइसेंस में लगभग 30 दिन और सेंट्रल लाइसेंस में 30 से 60 दिन।"],
+["क्या हर साल रिन्यू करना पड़ता है?","अब के लाइसेंस की अवधि खत्म नहीं होती, पर वार्षिक सरकारी फीस समय पर भरनी होती है। हम याद दिला सकते हैं।"]],
+disc:"Easy Food License एक निजी सलाहकार सेवा है। यह FSSAI या किसी सरकारी कार्यालय का हिस्सा नहीं है, न ही उससे मान्यता प्राप्त है। लाइसेंस केवल खाद्य सुरक्षा प्राधिकरण जारी करते हैं। आप foscos.fssai.gov.in पर खुद भी आवेदन कर सकते हैं।",
+types:["दुकान / किराना / रिटेल","रेस्टोरेंट / होटल / ढाबा","मिठाई और नमकीन की दुकान","ठेला / स्टॉल","घर की रसोई / टिफ़िन / क्लाउड किचन","कैटरर","निर्माता / प्रोसेसर","डेयरी यूनिट","थोक विक्रेता / वितरक","ट्रांसपोर्टर / स्टोरेज","आयातक / निर्यातक","ऑनलाइन खाद्य विक्रेता"],
+lic:["बेसिक रजिस्ट्रेशन","स्टेट लाइसेंस","सेंट्रल लाइसेंस","पता नहीं – सलाह दें"],
+wa:{more:"नमस्ते {name}, आपके FSSAI आवेदन ({ref}) के लिए कुछ और दस्तावेज़ चाहिए। Easy Food License वेबसाइट या ऐप में \"आवेदन की स्थिति\" में अपलोड करें, या यहाँ भेजें।",
+ready:"नमस्ते {name}, {shop} का आपका FSSAI फूड लाइसेंस तैयार है (Ref {ref})। UPI ID {upi} पर रु. {fee} भुगतान करके स्क्रीनशॉट यहाँ भेजें। फिर हम लाइसेंस भेजेंगे। – Easy Food License",
+sent:"भुगतान के लिए धन्यवाद, {name}। {shop} का आपका FSSAI फूड लाइसेंस साथ में है (Ref {ref})। इसका प्रिंट निकालकर दुकान में लगाएँ। – Easy Food License"}}
+};
+const STATUS_EN = ["Submitted","Need more documents","Documents OK","Applied on FoSCoS","Licence ready – payment pending","Paid – licence sent"];
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fill = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k] ?? "");
+const store = {
+  get(k, d, ses){ try{ const v = (ses?sessionStorage:localStorage).getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v, ses){ try{ (ses?sessionStorage:localStorage).setItem(k, JSON.stringify(v)); }catch(e){} },
+  del(k, ses){ try{ (ses?sessionStorage:localStorage).removeItem(k); }catch(e){} }
+};
+let lang = store.get("efl-lang", "en");
+if (!T[lang]) lang = "en";
+const t = k => T[lang][k] ?? T.en[k];
+const LIVE = !!CONFIG.backendUrl;
+// Where did the visitor come from? Links in ads use ?src=instagram / facebook / qr
+const SOURCE = (() => {
+  const q = new URLSearchParams(location.search);
+  let v = (q.get("src") || q.get("utm_source") || "").toLowerCase().replace(/[^a-z0-9_-]/g,"").slice(0,30);
+  if (!v && /(instagram|facebook|fb)\./i.test(document.referrer)) v = /instagram/i.test(document.referrer) ? "instagram" : "facebook";
+  if (v) store.set("efl-src", v, true);
+  return v || store.get("efl-src", "", true) || (/; wv\)/.test(navigator.userAgent) && location.protocol === "file:" ? "app" : "website");
+})();
+const today = () => { const d=new Date(); return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear(); };
+const kb = n => n > 1048576 ? (n/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(n/1024))+" KB";
+
+async function api(payload){
+  const res = await fetch(CONFIG.backendUrl, { method:"POST", body: JSON.stringify(payload) }); // text/plain: no CORS preflight
+  const data = await res.json();
+  if (!data.ok && !data.notFound) throw new Error(data.error || "Server error");
+  return data;
+}
+
+/* ---------- files: read and shrink photos ---------- */
+const ALLOWED = ["image/jpeg","image/png","image/webp","application/pdf"];
+function readAsDataURL(f){ return new Promise((ok,no)=>{ const r=new FileReader(); r.onload=()=>ok(r.result); r.onerror=no; r.readAsDataURL(f); }); }
+async function prepareFile(f){
+  let mime = f.type || (/\.pdf$/i.test(f.name) ? "application/pdf" : "");
+  if (!ALLOWED.includes(mime)) throw new Error(fill(t("eType"), {name:f.name}));
+  if (mime.startsWith("image/")){
+    try{
+      const url = await readAsDataURL(f);
+      const img = await new Promise((ok,no)=>{ const i=new Image(); i.onload=()=>ok(i); i.onerror=no; i.src=url; });
+      const max = 1800, sc = Math.min(1, max/Math.max(img.width, img.height));
+      const c = document.createElement("canvas"); c.width = Math.round(img.width*sc); c.height = Math.round(img.height*sc);
+      const g = c.getContext("2d"); g.fillStyle="#fff"; g.fillRect(0,0,c.width,c.height); g.drawImage(img,0,0,c.width,c.height);
+      const out = c.toDataURL("image/jpeg", 0.82);
+      const data = out.split(",")[1];
+      return { label:f.name, mime:"image/jpeg", data, size: Math.round(data.length*0.75) };
+    }catch(e){ /* fall through to original */ }
+  }
+  if (f.size > 5*1048576) throw new Error(fill(t("eBig"), {name:f.name}));
+  const data = (await readAsDataURL(f)).split(",")[1];
+  return { label:f.name, mime, data, size:f.size };
+}
+
+/* ---------- render ---------- */
+let picked = {};   // code -> [file]
+function licKey(){ const k = LIC_KEYS[+$("#fLic").value] || "basic"; return k === "notsure" ? "basic" : k; }
+
+function renderDocs(){
+  const set = SETS[licKey()];
+  $("#docList").innerHTML = set.map(([code, req]) => {
+    const files = picked[code] || [];
+    return `<li class="doc ${files.length?"has":""}" data-code="${code}">
+      <div class="name">${esc(DOCS[code][lang])}<span class="tag ${req?"r":"o"}">${req?t("required"):t("optional")}</span></div>
+      <div class="btns">
+        <label class="btn line sm up">${esc(t("camera"))}<input type="file" accept="image/*" capture="environment" data-code="${code}" aria-label="${esc(t("camera"))}: ${esc(DOCS[code][lang])}"></label>
+        <label class="btn line sm up">${files.length?t("change"):t("upload")}<input type="file" accept="image/*,application/pdf" multiple data-code="${code}" aria-label="${esc(DOCS[code][lang])}"></label>
+      </div>
+      <div class="chips">${files.map((f,i)=>`<span class="chip"><span>${esc(f.label)} · ${kb(f.size)}</span><button type="button" data-rm="${code}:${i}" aria-label="Remove">×</button></span>`).join("")}</div>
+    </li>`;
+  }).join("");
+}
+
+function renderPrices(){
+  const c = CONFIG.charges;
+  const rows = [[t("lBasic"), c.basic],[t("lState"), c.state],[t("lCentral"), c.central]];
+  $("#priceList").innerHTML = rows.map(([n,v])=>`<div class="price"><small>${esc(n)}</small><b>${v ? "₹"+v : esc(t("asDecided"))}</b><small>${esc(t("perApp"))}</small></div>`).join("");
+}
+
+function fillSelect(sel, items){ const k = sel.selectedIndex; sel.innerHTML = items.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join(""); sel.selectedIndex = k>0?k:0; }
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i]").forEach(el => { const v = t(el.dataset.i); if (typeof v === "string") el.textContent = v; });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  fillSelect($("#fType"), t("types")); fillSelect($("#fLic"), t("lic"));
+  $("#faqList").innerHTML = t("faq").map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
+  $("#cAddr").textContent = CONFIG.address[lang] || CONFIG.address.en;
+  renderDocs(); renderPrices();
+  if (lastTrack) showTrack(lastTrack);
+}
+
+/* ---------- application form ---------- */
+$("#fLic").addEventListener("change", renderDocs);
+$("#docList").addEventListener("change", async e => {
+  const inp = e.target.closest("input[type=file]"); if (!inp) return;
+  const code = inp.dataset.code, err = $("#appErr"); err.hidden = true;
+  for (const f of inp.files){
+    try{ (picked[code] ||= []).push(await prepareFile(f)); }
+    catch(x){ err.textContent = x.message; err.hidden = false; }
+  }
+  renderDocs();
+});
+$("#docList").addEventListener("click", e => {
+  const b = e.target.closest("[data-rm]"); if (!b) return;
+  const [code, i] = b.dataset.rm.split(":"); picked[code].splice(+i, 1); renderDocs();
+});
+
+$("#appForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const err = $("#appErr"), ok = $("#appOk"), btn = $("#appBtn");
+  err.hidden = true; ok.hidden = true;
+  const name = $("#fName").value.trim(), mobile = $("#fMobile").value.replace(/\D/g,""), shop = $("#fShop").value.trim();
+  const fail = m => { err.textContent = m; err.hidden = false; };
+  if (!name) return fail(t("eName"));
+  if (!/^[6-9]\d{9}$/.test(mobile)) return fail(t("eMob"));
+  if (!shop) return fail(t("eShop"));
+  const set = SETS[licKey()];
+  const missing = set.filter(([c,r]) => r && !(picked[c]||[]).length).map(([c]) => DOCS[c][lang]);
+  if (missing.length) return fail(fill(t("eDocs"), {list: missing.join(", ")}));
+  if (!$("#fAgree").checked) return fail(t("eAgree"));
+
+  const files = [];
+  set.forEach(([c]) => (picked[c]||[]).forEach(f => files.push({ code: DOCS[c].file, mime: f.mime, data: f.data })));
+  const payload = { action:"submit", name, mobile, shop, city:$("#fCity").value.trim(),
+    type: T.en.types[+$("#fType").value], licence: LIC_EN[+$("#fLic").value], message: $("#fMsg").value.trim(), lang, source: SOURCE, files };
+
+  btn.disabled = true; btn.textContent = t("sending");
+  try{
+    let ref, text;
+    if (LIVE){ ref = (await api(payload)).ref; text = t("okSent"); }
+    else {
+      const all = store.get("efl-demo", []);
+      ref = "EFL-" + String(new Date().getFullYear()).slice(2) + "-" + String(all.length + 1).padStart(4,"0");
+      all.unshift({ Ref:ref, Date:today(), Name:name, Mobile:mobile, Shop:shop, City:payload.city, "Business type":payload.type,
+        "Licence type":payload.licence, Message:payload.message, Status:STATUS_EN[0], statusIndex:0, Fee:"", "Licence no":"",
+        "Folder link":"", Source: SOURCE, Files: files.map(f => `${shop}_${mobile}_${f.code}`).join(", "), Lang:lang });
+      store.set("efl-demo", all); text = t("okDemo");
+    }
+    ok.innerHTML = fill(text, { ref: esc(ref), mob: esc(mobile) }); ok.hidden = false;
+    $("#tRef").value = ref; $("#tMob").value = mobile;
+    e.target.reset(); picked = {}; renderDocs();
+    ok.scrollIntoView({ behavior:"smooth", block:"center" });
+  }catch(x){ fail(fill(t("eNet"), {msg: x.message})); }
+  finally{ btn.disabled = false; btn.textContent = t("submit"); }
+});
+
+/* ---------- tracking ---------- */
+let lastTrack = null;
+function showTrack(r){
+  const s = r.status, out = $("#trOut");
+  const stepOf = [0,0,1,2,3,4][s] ?? 0;
+  let html = `<p class="mono" style="margin-top:16px">${esc(r.ref)} · ${esc(r.date||"")}</p><div class="timeline">` +
+    t("tl").map((x,i)=>`<div class="tl ${i<stepOf||s===5?"done":i===stepOf?"now":"todo"}"><i></i><span>${esc(x)}</span></div>`).join("") + `</div>`;
+  if (s === 1) html += `<div class="msg warn">${esc(t("needMore"))}</div>`;
+  if (s === 4) html += `<div class="msg warn">${fill(t("readyPay"), {fee: esc(r.fee || ""), upi: esc(CONFIG.upiId), phone: esc("+91 "+CONFIG.phone)})}</div>`;
+  if (s === 5) html += `<div class="msg ok">${esc(t("sentDone"))}${r.licenceNo ? `<br>${esc(t("licNo"))}: <span class="mono">${esc(r.licenceNo)}</span>` : ""}</div>`;
+  if (s < 4) html += `<form class="form" id="addForm" style="margin-top:16px" novalidate><h3>${esc(t("addTitle"))}</h3>
+    <div class="grid2"><div><label for="addDoc">${esc(t("addDoc"))}</label><select id="addDoc">${Object.keys(DOCS).map(c=>`<option value="${c}">${esc(DOCS[c][lang])}</option>`).join("")}</select></div>
+    <div><label for="addFile">${esc(t("addFile"))}</label><input type="file" id="addFile" accept="image/*,application/pdf" multiple>
+    <label class="btn line sm up" style="position:relative;margin-top:6px">${esc(t("camera"))}<input type="file" id="addCam" accept="image/*" capture="environment" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label></div></div>
+    <div><button class="btn sm" type="submit" id="addBtn">${esc(t("addBtn"))}</button></div><p class="msg err" id="addErr" hidden></p><div class="msg ok" id="addOk" hidden></div></form>`;
+  out.innerHTML = html; out.hidden = false;
+}
+$("#trForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const err = $("#trErr"); err.hidden = true; $("#trOut").hidden = true; lastTrack = null;
+  const ref = $("#tRef").value.trim().toUpperCase(), mob = $("#tMob").value.replace(/\D/g,"");
+  try{
+    let r;
+    if (LIVE){ r = await api({ action:"track", ref, mobile:mob }); if (r.notFound) r = null; }
+    else { const d = store.get("efl-demo", []).find(x => x.Ref === ref && x.Mobile === mob);
+      r = d ? { ref:d.Ref, date:d.Date, status:d.statusIndex, fee:d.statusIndex>=4?d.Fee:"", licenceNo:d.statusIndex>=5?d["Licence no"]:"" } : null; }
+    if (!r){ err.textContent = t("tNone"); err.hidden = false; return; }
+    r.mobile = mob; lastTrack = r; showTrack(r);
+  }catch(x){ err.textContent = fill(t("eNet"), {msg:x.message}); err.hidden = false; }
+});
+$("#trOut").addEventListener("submit", async e => {
+  if (e.target.id !== "addForm") return;
+  e.preventDefault();
+  const err = $("#addErr"), ok = $("#addOk"), btn = $("#addBtn"); err.hidden = true; ok.hidden = true;
+  const code = $("#addDoc").value, fl = [...$("#addFile").files, ...$("#addCam").files];
+  if (!fl.length) return;
+  btn.disabled = true;
+  try{
+    const files = [];
+    for (const f of fl){ const p = await prepareFile(f); files.push({ code: DOCS[code].file, mime:p.mime, data:p.data }); }
+    if (LIVE) await api({ action:"addDocs", ref:lastTrack.ref, mobile:lastTrack.mobile, files });
+    ok.textContent = fill(t("addOk"), {n: files.length}); ok.hidden = false; $("#addFile").value = ""; $("#addCam").value = "";
+  }catch(x){ err.textContent = x.message; err.hidden = false; }
+  finally{ btn.disabled = false; }
+});
+
+/* ---------- admin ---------- */
+let pin = store.get("efl-pin", "", true), rows = [], filter = -1;
+function waLink(r, kind){
+  const L = T[r.Lang] || T.en;
+  const fee = r.Fee || defaultFee(r);
+  const text = fill(L.wa[kind], { name: r.Name, shop: r.Shop, ref: r.Ref, fee, upi: CONFIG.upiId });
+  return `https://wa.me/91${String(r.Mobile).replace(/\D/g,"")}?text=${encodeURIComponent(text)}`;
+}
+function defaultFee(r){ const k = {"Basic Registration":"basic","State Licence":"state","Central Licence":"central"}[r["Licence type"]] || "basic"; return CONFIG.charges[k] || ""; }
+
+async function adminLoad(){
+  if (LIVE){ const d = await api({ action:"list", pin }); rows = d.rows; }
+  else rows = store.get("efl-demo", []);
+  renderAdmin();
+}
+function renderAdmin(){
+  const counts = STATUS_EN.map((_, i) => rows.filter(r => r.statusIndex === i).length);
+  $("#aFilters").innerHTML = `<button type="button" data-f="-1" aria-pressed="${filter===-1}">All (${rows.length})</button>` +
+    STATUS_EN.map((s,i)=>`<button type="button" data-f="${i}" aria-pressed="${filter===i}">${esc(s)} (${counts[i]})</button>`).join("");
+  const q = $("#aSearch").value.toLowerCase();
+  const list = rows.filter(r => (filter === -1 || r.statusIndex === filter) && (!q || [r.Ref,r.Name,r.Mobile,r.Shop,r.City].join(" ").toLowerCase().includes(q)));
+  $("#aList").innerHTML = list.length ? list.map(r => `
+  <article class="app" data-s="${r.statusIndex}" data-ref="${esc(r.Ref)}">
+    <div class="top"><b>${esc(r.Shop)} · ${esc(r.Name)}</b><span><span class="mono">${esc(r.Ref)}</span> · ${esc(r.Date)}</span></div>
+    <div class="meta">Mobile: ${esc(r.Mobile)} · ${esc(r.City||"-")} · ${esc(r["Business type"])} · <b>${esc(r["Licence type"])}</b> · From: ${esc(r.Source||"-")} · <span class="pill">${esc(r.Status)}</span></div>
+    ${r.Message ? `<div>${esc(r.Message)}</div>` : ""}
+    <div class="files">${esc(r.Files)}</div>
+    <div class="g3">
+      <div><label>Status</label><select class="aS">${STATUS_EN.map((s,i)=>`<option value="${i}" ${i===r.statusIndex?"selected":""}>${esc(s)}</option>`).join("")}</select></div>
+      <div><label>Fee ₹</label><input class="aF" inputmode="numeric" value="${esc(r.Fee || defaultFee(r))}"></div>
+      <div><label>FSSAI licence no.</label><input class="aL" inputmode="numeric" maxlength="14" value="${esc(r["Licence no"])}"></div>
+      <button class="btn sm aSave" type="button">Save</button>
+    </div>
+    <div class="acts">
+      ${r["Folder link"] ? `<a class="btn line sm" href="${esc(r["Folder link"])}" target="_blank" rel="noopener">Open documents folder</a>` : ""}
+      <a class="btn line sm aWa" data-kind="more" data-set="1" href="${waLink(r,"more")}" target="_blank" rel="noopener">WhatsApp: need documents</a>
+      <a class="btn line sm aWa" data-kind="ready" data-set="4" href="${waLink(r,"ready")}" target="_blank" rel="noopener">WhatsApp: licence ready, ask payment</a>
+      <a class="btn line sm aWa" data-kind="sent" data-set="5" href="${waLink(r,"sent")}" target="_blank" rel="noopener">WhatsApp: payment received, send licence</a>
+      ${LIVE ? `<label class="btn line sm up" style="position:relative">Upload licence PDF<input type="file" class="aUp" accept="application/pdf,image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label>` : ""}
+    </div>
+    <p class="msg err aErr" hidden></p>
+  </article>`).join("") : `<p class="muted">No applications here.</p>`;
+}
+async function saveRow(card, patch){
+  const r = rows.find(x => x.Ref === card.dataset.ref), err = card.querySelector(".aErr"); err.hidden = true;
+  try{
+    if (LIVE) await api({ action:"update", pin, ref:r.Ref, ...patch });
+    if (patch.status !== undefined){ r.statusIndex = +patch.status; r.Status = STATUS_EN[r.statusIndex]; }
+    if (patch.fee !== undefined) r.Fee = patch.fee;
+    if (patch.licenceNo !== undefined) r["Licence no"] = patch.licenceNo;
+    if (!LIVE) store.set("efl-demo", rows);
+    renderAdmin();
+  }catch(x){ err.textContent = x.message; err.hidden = false; }
+}
+$("#aList").addEventListener("click", e => {
+  const card = e.target.closest(".app"); if (!card) return;
+  if (e.target.closest(".aSave")){
+    saveRow(card, { status: card.querySelector(".aS").value, fee: card.querySelector(".aF").value.replace(/\D/g,""), licenceNo: card.querySelector(".aL").value.replace(/\D/g,"") });
+  }
+  const wa = e.target.closest(".aWa");
+  if (wa){ // link opens WhatsApp; status is updated alongside
+    const patch = { status: wa.dataset.set };
+    if (wa.dataset.kind === "ready") patch.fee = card.querySelector(".aF").value.replace(/\D/g,"");
+    setTimeout(() => saveRow(card, patch), 300);
+  }
+});
+$("#aList").addEventListener("change", async e => {
+  const inp = e.target.closest(".aUp"); if (!inp || !inp.files[0]) return;
+  const card = inp.closest(".app"), err = card.querySelector(".aErr"); err.hidden = true;
+  try{ const p = await prepareFile(inp.files[0]); const d = await api({ action:"uploadLicence", pin, ref: card.dataset.ref, file:{ mime:p.mime, data:p.data } });
+    err.textContent = "Saved in folder: " + d.name; err.style.color = "var(--ok)"; err.hidden = false; }
+  catch(x){ err.textContent = x.message; err.style.color = ""; err.hidden = false; }
+});
+$("#aFilters").addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (b){ filter = +b.dataset.f; renderAdmin(); } });
+$("#aSearch").addEventListener("input", renderAdmin);
+$("#aRefresh").addEventListener("click", () => adminLoad().catch(x => alertTop(x.message)));
+$("#aLogout").addEventListener("click", () => { pin = ""; store.del("efl-pin", true); $("#aTools").hidden = true; $("#pinForm").hidden = false; });
+function alertTop(m){ const p = $("#pinErr"); p.textContent = m; p.hidden = false; }
+$("#pinForm").addEventListener("submit", async e => {
+  e.preventDefault(); $("#pinErr").hidden = true;
+  pin = $("#aPin").value.trim();
+  try{
+    if (LIVE) await api({ action:"login", pin });
+    store.set("efl-pin", pin, true);
+    $("#pinForm").hidden = true; $("#aTools").hidden = false; await adminLoad();
+  }catch(x){ alertTop(x.message === "Wrong PIN" ? "Wrong PIN." : x.message); }
+});
+async function openAdmin(){
+  $("#publicView").hidden = true; $("#adminView").hidden = false; window.scrollTo(0,0);
+  $("#aDemo").hidden = LIVE;
+  if (pin || !LIVE){ $("#pinForm").hidden = true; $("#aTools").hidden = false; try{ await adminLoad(); }catch(x){ $("#pinForm").hidden=false; $("#aTools").hidden=true; alertTop(x.message); } }
+}
+function route(){
+  if (location.hash === "#admin") openAdmin();
+  else if (!$("#adminView").hidden){ $("#adminView").hidden = true; $("#publicView").hidden = false; }
+}
+
+/* ---------- wiring ---------- */
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.lang; store.set("efl-lang", lang); applyLang(); }));
+$("#cPhone").textContent = "+91 " + CONFIG.phone; $("#cEmail").textContent = CONFIG.email;
+$("#copyPhone").addEventListener("click", e => {
+  const b = e.currentTarget;
+  navigator.clipboard.writeText("+91" + CONFIG.phone).then(() => { b.textContent = t("copied"); setTimeout(() => b.textContent = t("copy"), 1500); })
+    .catch(() => { const r = document.createRange(); r.selectNodeContents($("#cPhone")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
+});
+window.addEventListener("hashchange", route);
+applyLang(); route();
+</script>
+
+</body>
+</html>

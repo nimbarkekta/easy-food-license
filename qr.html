@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Easy Food License – Links and QR codes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#f4f6f8;--surface:#fff;--ink:#1c2633;--muted:#5c6878;--line:#dce1e7;--primary:#1f4e79;--on:#fff;--ok:#2e7d4f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Hind",system-ui,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px 40px}
+h1{font-size:1.6rem;font-weight:600;margin:0}
+p{margin:0}
+.muted{color:var(--muted)}
+.base{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 22px}
+.base input{flex:1 1 280px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font:1rem "Hind",sans-serif}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;display:grid;gap:10px;justify-items:center;text-align:center}
+.card h2{font-size:1.1rem;font-weight:600;margin:0}
+.qr{background:#fff;padding:10px;border-radius:6px;border:1px solid var(--line)}
+.qr img,.qr canvas{display:block;width:200px;height:200px}
+.link{font-size:.85rem;color:var(--muted);overflow-wrap:anywhere}
+.row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.btn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--primary);background:var(--primary);color:var(--on);font:600 .92rem "Hind",sans-serif;cursor:pointer;text-decoration:none}
+.btn.line{background:transparent;color:var(--primary)}
+.tip{margin-top:24px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.tip li{margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Links and QR codes</h1>
+  <p class="muted">Use a different link for each ad. Every application then shows where the customer came from (Admin page, "From:").</p>
+
+  <div class="base">
+    <input id="base" aria-label="Website address">
+    <button class="btn line" id="apply" type="button">Update</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="tip">
+    <b>How to use</b>
+    <ul>
+      <li><b>Instagram / Facebook ad:</b> in Ads Manager, choose the goal "Traffic" and paste the matching link as the Website URL. You can also put the QR image inside the ad picture.</li>
+      <li><b>Instagram bio or Facebook page button:</b> use the same links.</li>
+      <li><b>Posters, banners, visiting cards:</b> download the "Poster" QR and print it at least 3 cm wide.</li>
+      <li><b>WhatsApp status / groups:</b> copy the WhatsApp link and share it.</li>
+    </ul>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const SOURCES = [
+  ["instagram", "Instagram ad"],
+  ["facebook",  "Facebook ad"],
+  ["qr",        "Poster / visiting card"],
+  ["whatsapp",  "WhatsApp share"]
+];
+const baseInput = document.getElementById("base");
+baseInput.value = location.href.replace(/[#?].*$/, "").replace(/qr\.html$/, "");
+
+function linkFor(src){ return baseInput.value.trim().replace(/\/?$/, "/") + "?src=" + src; }
+
+function render(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  SOURCES.forEach(([src, title]) => {
+    const url = linkFor(src);
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<h2>${title}</h2><div class="qr"></div><div class="link">${url}</div>
+      <div class="row"><button class="btn" type="button" data-dl>Download QR</button>
+      <button class="btn line" type="button" data-copy>Copy link</button>
+      <a class="btn line" href="${url}" target="_blank" rel="noopener">Open</a></div>`;
+    grid.appendChild(card);
+    new QRCode(card.querySelector(".qr"), { text: url, width: 400, height: 400, correctLevel: QRCode.CorrectLevel.M });
+    card.querySelector("[data-copy]").onclick = e => {
+      navigator.clipboard.writeText(url).then(() => { e.target.textContent = "Copied"; setTimeout(() => e.target.textContent = "Copy link", 1500); });
+    };
+    card.querySelector("[data-dl]").onclick = () => download(card, src, url);
+  });
+}
+
+// Poster-ready PNG: QR with a short line of text above and the address below
+function download(card, src, url){
+  const qr = card.querySelector(".qr canvas");
+  const W = 700, H = 860, c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const g = c.getContext("2d");
+  g.fillStyle = "#ffffff"; g.fillRect(0, 0, W, H);
+  g.fillStyle = "#1f4e79"; g.textAlign = "center";
+  g.font = "600 44px Hind, Arial, sans-serif"; g.fillText("Easy Food License", W/2, 80);
+  g.fillStyle = "#1c2633"; g.font = "30px Hind, Arial, sans-serif";
+  g.fillText("Scan to apply for FSSAI food licence", W/2, 130);
+  g.drawImage(qr, 100, 170, 500, 500);
+  g.fillStyle = "#5c6878"; g.font = "24px Hind, Arial, sans-serif";
+  g.fillText(url.replace(/^https?:\/\//, ""), W/2, 730);
+  g.fillText("Upload documents • Pay after licence is ready", W/2, 780);
+  const a = document.createElement("a");
+  a.download = "EasyFoodLicense-QR-" + src + ".png";
+  a.href = c.toDataURL("image/png");
+  a.click();
+}
+
+document.getElementById("apply").onclick = render;
+render();
+</script>
+</body>
+</html>
